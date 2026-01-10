@@ -6,14 +6,27 @@ import { initialGameState } from "../mock/initialGameState";
 import { Board } from "../components/Board";
 import { visibleBoard } from "../state/boardSelector";
 import { ActionButtons } from "../components/ActionButtons";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { Lobby } from "../components/Lobby";
 
 function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Navigate to="/lobby" replace />} />
+        <Route path="/lobby" element={<Lobby />} />
+        <Route path="/table/:tableId" element={<GameTable />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+function GameTable() {
   const [state, dispatch] = useReducer(gameReducer, initialGameState);
 
   const boardCards = visibleBoard(state.board, state.phase);
 
   // Mock code.
-  const CALL_AMOUNT = 10;
   const RAISE_AMOUNT = 20;
   const currentSeat = state.table.seats[state.currentPlayerPosition];
   const canAct = currentSeat.player && currentSeat.player.status === "active";
@@ -35,7 +48,6 @@ function App() {
           dispatch({
             type: "PLAYER_CALL",
             position: state.currentPlayerPosition,
-            amount: CALL_AMOUNT,
           });
           dispatch({ type: "NEXT_PLAYER" });
         }}
