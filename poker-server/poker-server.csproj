@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>poker_server</RootNamespace>
+    <AssemblyName>poker-server</AssemblyName>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+</Project>
