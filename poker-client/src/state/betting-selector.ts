@@ -1,7 +1,8 @@
+import type { GameState } from "../models/GameState";
 import type { Seat } from "../models/Seat";
-import { activeSeats } from "./playerSelector";
+import { activeSeats } from "./player-selector";
 
-export function bettingRoundComplete(
+export function isBettingRoundComplete(
     seats: Seat[],
     actedPositions: number[],
     currentBet: number
@@ -11,15 +12,9 @@ export function bettingRoundComplete(
         actedPositions.includes(seat.position)
     )
 
-    if (!allActed) {
-        return false;
-    }
-
-    const allMatched = active.every((seat) =>
-        seat.player!.betThisRound === currentBet
-    );
-
-    return allMatched;
+    return allActed
+        ? active.every((seat) => seat.player!.betThisRound === currentBet)
+        : false;
 }
 
 export function resetBets(seats: Seat[]): Seat[] {
@@ -36,4 +31,12 @@ export function resetBets(seats: Seat[]): Seat[] {
             },
         }
     })
+}
+
+export function shouldEndBettingRound(state: GameState): boolean {
+    return isBettingRoundComplete(
+        state.table.seats,
+        state.actedPositions,
+        state.currentBet
+    );
 }
