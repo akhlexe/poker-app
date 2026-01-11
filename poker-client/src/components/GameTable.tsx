@@ -19,8 +19,29 @@ export function GameTable() {
   const canAct = currentSeat.player && currentSeat.player.status === "active";
 
   return (
-    <div>
+    <div
+      style={{
+        maxWidth: "1200px",
+        margin: "0 auto",
+        padding: "2rem",
+      }}
+    >
       <h1>Poker Game - Table {tableId}</h1>
+
+      <div style={{ marginTop: 16, marginBottom: "10px" }}>
+        <div>Pot: {state.pot}</div>
+        <div>Phase: {state.phase}</div>
+      </div>
+
+      <Board cards={boardCards} />
+      <Table
+        table={state.table}
+        currentPlayerPosition={state.currentPlayerPosition}
+        onFold={(position) => {
+          dispatch({ type: "FOLD", position });
+        }}
+      ></Table>
+
       <ActionButtons
         canAct={!!canAct}
         onCheck={() => {
@@ -43,19 +64,6 @@ export function GameTable() {
           });
         }}
       />
-      <Board cards={boardCards} />
-      <Table
-        table={state.table}
-        currentPlayerPosition={state.currentPlayerPosition}
-        onFold={(position) => {
-          dispatch({ type: "FOLD", position });
-        }}
-      ></Table>
-
-      <div style={{ marginTop: 16 }}>
-        <div>Pot: {state.pot}</div>
-        <div>Phase: {state.phase}</div>
-      </div>
     </div>
   );
 }

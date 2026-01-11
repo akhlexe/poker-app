@@ -10,8 +10,6 @@ interface Props {
 export function Table({ table, currentPlayerPosition, onFold }: Props) {
   return (
     <div>
-      <h2>{table.name}</h2>
-
       <div className="table">
         {table.seats.map((seat) => (
           <Seat
