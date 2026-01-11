@@ -36,3 +36,35 @@ export function advanceToNextPlayer(state: GameState): GameState {
         ),
     };
 }
+
+export function findUTGPosition(
+    seats: Seat[],
+    dealerPosition: number
+): number {
+    let position = dealerPosition;
+
+    for (let i = 0; i < 3; i++) {
+        position = findNextPosition(seats, position);
+    }
+
+    if (!seats[position].player || seats[position].player!.status !== "active") {
+        position = findNextActivePlayerPosition(seats, position);
+    }
+
+    return position;
+}
+
+export function findSmallBlindPosition(
+    seats: Seat[],
+    dealerPosition: number
+): number {
+    return findNextPosition(seats, dealerPosition);
+}
+
+export function findBigBlindPosition(
+    seats: Seat[],
+    dealerPosition: number
+): number {
+    const smallBlindPosition = findSmallBlindPosition(seats, dealerPosition);
+    return findNextPosition(seats, smallBlindPosition);
+}

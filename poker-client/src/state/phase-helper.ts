@@ -1,8 +1,8 @@
 import type { GamePhase } from "../models/GamePhase";
 import type { GameState } from "../models/GameState";
-import { resetBets } from "./bettingSelector";
-import { findNextActivePlayerPosition } from "./playerNavigation";
-import { activeSeats } from "./playerSelector";
+import { resetBets } from "./betting-selector";
+import { findNextActivePlayerPosition } from "./player-navigation";
+import { activeSeats } from "./player-selector";
 
 const phaseOrder: GamePhase[] = [
     "pre-flop",
