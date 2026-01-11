@@ -19,7 +19,57 @@ export function Lobby() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchTables();
+    // fetchTables();
+
+    // Mock data for testing
+    const mockTables: TableInfo[] = [
+      {
+        id: "1",
+        name: "Table 1 - Beginner",
+        currentPlayers: 3,
+        maxPlayers: 6,
+        smallBlind: 5,
+        bigBlind: 10,
+        minBuyIn: 100,
+        maxBuyIn: 500,
+      },
+      {
+        id: "2",
+        name: "Table 2 - Intermediate",
+        currentPlayers: 5,
+        maxPlayers: 9,
+        smallBlind: 10,
+        bigBlind: 20,
+        minBuyIn: 200,
+        maxBuyIn: 1000,
+      },
+      {
+        id: "3",
+        name: "Table 3 - High Stakes",
+        currentPlayers: 9,
+        maxPlayers: 9,
+        smallBlind: 50,
+        bigBlind: 100,
+        minBuyIn: 1000,
+        maxBuyIn: 5000,
+      },
+      {
+        id: "4",
+        name: "Table 4 - Casual",
+        currentPlayers: 1,
+        maxPlayers: 6,
+        smallBlind: 2,
+        bigBlind: 5,
+        minBuyIn: 50,
+        maxBuyIn: 200,
+      },
+    ];
+
+    // Simulate loading delay
+    setTimeout(() => {
+      setTables(mockTables);
+      setLoading(false);
+    }, 500);
   }, []);
 
   const fetchTables = async () => {
