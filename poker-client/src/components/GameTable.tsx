@@ -8,6 +8,7 @@ import { Board } from "./Board";
 import { GameInfo } from "./GameInfo";
 import { Table } from "./Table";
 import { canPlayerCheck } from "../state/betting-selector";
+import { canPlayerAct, canPostBlinds } from "../state/action-selector";
 
 export function GameTable() {
   const { tableId } = useParams<{ tableId: string }>();
@@ -17,18 +18,6 @@ export function GameTable() {
 
   // Mock code.
   const RAISE_AMOUNT = 20;
-  const currentSeat = state.table.seats[state.currentPlayerPosition];
-  const canAct =
-    currentSeat.player &&
-    currentSeat.player.status === "active" &&
-    state.phase !== "showdown";
-  const canPostBlinds = state.pot === 0;
-  const canCheck = () =>
-    canPlayerCheck(
-      state.currentPlayerPosition,
-      state.table.seats,
-      state.currentBet
-    );
 
   return (
     <div
@@ -55,7 +44,7 @@ export function GameTable() {
         }}
       ></Table>
 
-      {canPostBlinds && (
+      {canPostBlinds(state) && (
         <button
           onClick={() => {
             dispatch({ type: "POST_BLINDS" });
@@ -66,7 +55,7 @@ export function GameTable() {
       )}
 
       <ActionButtons
-        canAct={!!canAct}
+        canAct={canPlayerAct(state)}
         onCheck={() => {
           dispatch({
             type: "PLAYER_CHECK",
@@ -86,7 +75,13 @@ export function GameTable() {
             amount: RAISE_AMOUNT,
           });
         }}
-        canCheck={canCheck}
+        canCheck={() =>
+          canPlayerCheck(
+            state.currentPlayerPosition,
+            state.table.seats,
+            state.currentBet
+          )
+        }
       />
     </div>
   );
