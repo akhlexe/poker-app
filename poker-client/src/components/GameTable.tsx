@@ -18,6 +18,7 @@ export function GameTable() {
   const RAISE_AMOUNT = 20;
   const currentSeat = state.table.seats[state.currentPlayerPosition];
   const canAct = currentSeat.player && currentSeat.player.status === "active";
+  const canPostBlinds = state.pot === 0;
 
   return (
     <div
@@ -43,6 +44,16 @@ export function GameTable() {
           dispatch({ type: "FOLD", position });
         }}
       ></Table>
+
+      {canPostBlinds && (
+        <button
+          onClick={() => {
+            dispatch({ type: "POST_BLINDS" });
+          }}
+        >
+          Post Blinds
+        </button>
+      )}
 
       <ActionButtons
         canAct={!!canAct}

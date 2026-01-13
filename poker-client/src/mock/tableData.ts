@@ -14,7 +14,7 @@ export const mockTable: GameTable = {
                 chips: 1500,
                 cards: [card("A", "♠"), card("K", "♠")],
                 status: "active",
-                betThisRound: 10
+                betThisRound: 0
             }
         },
         { position: 1, player: null },
@@ -38,7 +38,7 @@ export const mockTable: GameTable = {
                 chips: 950,
                 cards: [card("7", "♣"), card("8", "♣")],
                 status: "active",
-                betThisRound: 5
+                betThisRound: 0
             }
         },
         { position: 5, player: null },

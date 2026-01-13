@@ -4,7 +4,7 @@ import { findNextPosition } from "../player-navigation";
 import { updatePlayer } from "../utils/seat-utils";
 
 export function handlePostBlinds(state: GameState) {
-    const dealerPos = state.currentPlayerPosition;
+    const dealerPos = state.table.dealerPosition;
     const sbPos = findNextPosition(state.table.seats, dealerPos);
     const bbPos = findNextPosition(state.table.seats, sbPos);
 
