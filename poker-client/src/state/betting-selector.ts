@@ -2,6 +2,20 @@ import type { GameState } from "../models/GameState";
 import type { Seat } from "../models/Seat";
 import { activeSeats } from "./player-selector";
 
+export function canPlayerCheck(
+    currentPlayerPosition: number,
+    seats: Seat[],
+    currentBet: number
+): boolean {
+    const seat = seats[currentPlayerPosition];
+
+    if (!seat.player || seat.player.status !== "active") {
+        return false;
+    }
+
+    return seat.player.betThisRound === currentBet;
+}
+
 export function isBettingRoundComplete(
     seats: Seat[],
     actedPositions: number[],
