@@ -72,7 +72,7 @@ button:focus-visible {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 12px;
-  max-width: 400px;
+  max-width: 1000px;
 }
 
 .seat {

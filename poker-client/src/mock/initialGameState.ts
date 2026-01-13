@@ -14,7 +14,6 @@ export const initialGameState: GameState = {
         { rank: "T", suit: "♥" }
     ],
     actedPositions: [],
-
     smallBlind: 5,
     bigBlind: 10,
     currentBet: 0,

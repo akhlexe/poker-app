@@ -14,7 +14,7 @@ export function GameInfo({ pot, phase, currentBet }: Props) {
         padding: "1rem",
         background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)",
         borderRadius: "12px",
-        marginBotton: "1.5rem",
+        marginBottom: "1.5rem",
         border: "2px solid #0f4c75",
       }}
     >

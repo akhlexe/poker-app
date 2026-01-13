@@ -11,9 +11,10 @@ export const mockTable: GameTable = {
             player: {
                 id: "player-1",
                 name: "Alice",
-                chips: 150,
+                chips: 1500,
                 cards: [card("A", "♠"), card("K", "♠")],
-                status: "active"
+                status: "active",
+                betThisRound: 10
             }
         },
         { position: 1, player: null },
@@ -22,9 +23,10 @@ export const mockTable: GameTable = {
             player: {
                 id: "player-2",
                 name: "Bob",
-                chips: 220,
+                chips: 1000,
                 cards: [card("Q", "♦"), card("J", "♦")],
-                status: "active"
+                status: "active",
+                betThisRound: 0
             }
         },
         { position: 3, player: null },
@@ -33,9 +35,10 @@ export const mockTable: GameTable = {
             player: {
                 id: "player-3",
                 name: "Carol",
-                chips: 95,
+                chips: 950,
                 cards: [card("7", "♣"), card("8", "♣")],
-                status: "active"
+                status: "active",
+                betThisRound: 5
             }
         },
         { position: 5, player: null },

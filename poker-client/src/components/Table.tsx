@@ -17,7 +17,6 @@ export function Table({ table, currentPlayerPosition, onFold }: Props) {
             seat={seat}
             isDealer={seat.position === table.dealerPosition}
             isCurrentPlayer={seat.position === currentPlayerPosition}
-            showFoldButton={seat.position === currentPlayerPosition}
             onFold={() => onFold(seat.position)}
           />
         ))}

@@ -33,6 +33,9 @@ export function handlePostBlinds(state: GameState) {
         };
     });
 
+    console.log(`Small Blind posted by position ${sbPos}`);
+    console.log(`Big Blind posted by position ${bbPos}`);
+
     return {
         ...state,
         pot,

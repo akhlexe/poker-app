@@ -1,11 +1,12 @@
 import { useReducer } from "react";
+import { useParams } from "react-router-dom";
 import { initialGameState } from "../mock/initialGameState";
 import { visibleBoard } from "../state/board-selector";
+import { gameReducer } from "../state/game-reducer";
 import { ActionButtons } from "./ActionButtons";
 import { Board } from "./Board";
+import { GameInfo } from "./GameInfo";
 import { Table } from "./Table";
-import { gameReducer } from "../state/game-reducer";
-import { useParams } from "react-router-dom";
 
 export function GameTable() {
   const { tableId } = useParams<{ tableId: string }>();
@@ -21,17 +22,18 @@ export function GameTable() {
   return (
     <div
       style={{
-        maxWidth: "1200px",
-        margin: "0 auto",
-        padding: "2rem",
+        display: "flex",
+        alignContent: "center",
+        flexDirection: "column",
       }}
     >
       <h1>Poker Game - Table {tableId}</h1>
 
-      <div style={{ marginTop: 16, marginBottom: "10px" }}>
-        <div>Pot: {state.pot}</div>
-        <div>Phase: {state.phase}</div>
-      </div>
+      <GameInfo
+        pot={state.pot}
+        phase={state.phase}
+        currentBet={state.currentBet}
+      />
 
       <Board cards={boardCards} />
       <Table
