@@ -1,9 +1,11 @@
 using PokerApi.Endpoints;
+using PokerApi.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddOpenApi();
+builder.Services.AddPokerCors();
 
 var app = builder.Build();
 
@@ -12,6 +14,9 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
+
+// Use CORS
+app.UseCors("AllowReactApp");
 
 // Map endpoints
 app.MapHealthEndpoints();
