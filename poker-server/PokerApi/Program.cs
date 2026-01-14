@@ -1,3 +1,5 @@
+using PokerApi.Endpoints;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -13,9 +15,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// Healthcheck endpoint
-app.MapGet("/health", () => Results.Ok(new { status = "healthy", timestamp = DateTime.UtcNow }))
-    .WithName("HealthCheck")
-    .WithOpenApi();
+// Map endpoints
+app.MapHealthEndpoints();
+app.MapTableEndpoints();
 
 app.Run();

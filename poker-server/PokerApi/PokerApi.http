@@ -1,6 +1,13 @@
 @PokerApi_HostAddress = http://localhost:5073
 
-GET {{PokerApi_HostAddress}}/weatherforecast/
+### Health Check
+GET {{PokerApi_HostAddress}}/health
+Accept: application/json
+
+###
+
+### Get All Tables
+GET {{PokerApi_HostAddress}}/tables
 Accept: application/json
 
 ###
