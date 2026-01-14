@@ -13,8 +13,6 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.UseHttpsRedirection();
-
 // Map endpoints
 app.MapHealthEndpoints();
 app.MapTableEndpoints();
