@@ -1,19 +1,21 @@
 .container {
   min-height: 100vh;
   background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-  padding: 2rem;
+  padding: 2rem 3rem;
   color: #e5e5e5;
-  max-width: 1400px;
-  margin: 0 auto;
+  max-width: 100%;
 }
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
-  padding-bottom: 1rem;
+  margin-bottom: 3rem;
+  padding-bottom: 1.5rem;
   border-bottom: 2px solid #0f4c75;
+  max-width: 1800px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .title {
@@ -61,8 +63,11 @@
 
 .tableGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 2rem;
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
 .tableCard {
