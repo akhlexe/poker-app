@@ -1,3 +1,5 @@
+import styles from "./ActionButtons.module.css";
+
 interface Props {
   canAct: boolean;
   onCheck: () => void;
@@ -18,12 +20,20 @@ export function ActionButtons({
   }
 
   return (
-    <div style={{ marginTop: 16, padding: 8 }}>
-      <button onClick={onCheck} disabled={!canCheck()}>
+    <div className={styles.actionButtonContainer}>
+      <button
+        className={styles.actionButton}
+        onClick={onCheck}
+        disabled={!canCheck()}
+      >
         Check
       </button>
-      <button onClick={onCall}>Call</button>
-      <button onClick={onRaise}>Raise</button>
+      <button className={styles.actionButton} onClick={onCall}>
+        Call
+      </button>
+      <button className={styles.actionButton} onClick={onRaise}>
+        Raise
+      </button>
     </div>
   );
 }

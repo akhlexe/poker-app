@@ -8,6 +8,7 @@ import { gameReducer } from "../state/game-reducer";
 import { ActionButtons } from "./ActionButtons";
 import { Board } from "./Board";
 import { GameInfo } from "./GameInfo";
+import { Table } from "./Table";
 import styles from "./GameTable.module.css";
 
 export function GameTable() {
@@ -63,6 +64,17 @@ export function GameTable() {
           pot={gameState.pot}
           phase={gameState.phase}
           currentBet={gameState.currentBet}
+        />
+
+        <Table
+          table={gameState.table}
+          currentPlayerPosition={gameState.currentPlayerPosition}
+          onFold={(position) =>
+            dispatch({
+              type: "FOLD",
+              position,
+            })
+          }
         />
 
         <ActionButtons
