@@ -1,8 +1,10 @@
 .actionButtonContainer {
-    margin-top: 16px;
-    padding: 8px;
+    margin-top: 0;
+    padding: 0;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+    gap: 1rem;
+    flex-shrink: 0;
 }
 
 .actionButton {
