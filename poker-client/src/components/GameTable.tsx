@@ -59,12 +59,13 @@ export function GameTable() {
       {error && <div className={styles.errorOverlay}>Error: {error}</div>}
 
       <div className={styles.contentWrapper}>
-        <Board cards={gameState.board} />
         <GameInfo
           pot={gameState.pot}
           phase={gameState.phase}
           currentBet={gameState.currentBet}
         />
+
+        <Board cards={gameState.board} />
 
         <Table
           table={gameState.table}
