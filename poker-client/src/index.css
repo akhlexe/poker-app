@@ -71,28 +71,44 @@ button:focus-visible {
 .table {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  max-width: 1000px;
+  gap: 20px;
+  max-width: 1600px;
+  width: 100%;
+  margin: 2rem auto;
 }
 
 .seat {
-  border: 1px solid #ccc;
-  padding: 8px;
+  border: 2px solid #0f4c75;
+  padding: 1.5rem;
   text-align: center;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #1e2a3a 0%, #2d3e50 100%);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.seat:hover {
+  border-color: #00d9ff;
+  box-shadow: 0 6px 12px rgba(0, 217, 255, 0.2);
 }
 
 .empty {
-  background-color: #f5f5f5;
+  background: linear-gradient(145deg, #1a1a2e 0%, #252d3a 100%);
+  opacity: 0.6;
+  border-style: dashed;
 }
 
 .occupied {
-  background-color: #e6ffe6;
+  background: linear-gradient(145deg, #1e2a3a 0%, #2d3e50 100%);
 }
 
 .current {
-  outline: 2px solid orange;
+  outline: 3px solid #00d9ff;
+  outline-offset: 2px;
+  box-shadow: 0 0 20px rgba(0, 217, 255, 0.5);
 }
 
 .folded {
-  opacity: 0.4;
+  opacity: 0.3;
+  filter: grayscale(0.8);
 }

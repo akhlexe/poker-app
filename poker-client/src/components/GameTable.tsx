@@ -8,6 +8,7 @@ import { gameReducer } from "../state/game-reducer";
 import { ActionButtons } from "./ActionButtons";
 import { Board } from "./Board";
 import { GameInfo } from "./GameInfo";
+import styles from "./GameTable.module.css";
 
 export function GameTable() {
   const { tableId } = useParams<{ tableId: string }>();
@@ -49,86 +50,51 @@ export function GameTable() {
   // Show loading overlay while fetching, but still render initial mock state
 
   return (
-    <div
-      style={{
-        display: "flex",
-        alignContent: "center",
-        flexDirection: "column",
-        position: "relative",
-      }}
-    >
+    <div className={styles.container}>
       {/* Show loading/error overlay */}
       {loading && (
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            background: "rgba(0, 0, 0, 0.5)",
-            color: "white",
-            padding: "10px",
-            textAlign: "center",
-            zIndex: 10,
-          }}
-        >
-          Loading table data...
-        </div>
+        <div className={styles.loadingOverlay}>Loading table data...</div>
       )}
-      {error && (
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            background: "rgba(255, 0, 0, 0.7)",
-            color: "white",
-            padding: "10px",
-            textAlign: "center",
-            zIndex: 10,
-          }}
-        >
-          Error: {error}
-        </div>
-      )}
+      {error && <div className={styles.errorOverlay}>Error: {error}</div>}
 
-      <Board cards={gameState.board} />
-      <GameInfo
-        pot={gameState.pot}
-        phase={gameState.phase}
-        currentBet={gameState.currentBet}
-      />
+      <div className={styles.contentWrapper}>
+        <Board cards={gameState.board} />
+        <GameInfo
+          pot={gameState.pot}
+          phase={gameState.phase}
+          currentBet={gameState.currentBet}
+        />
 
-      <ActionButtons
-        canAct={canPlayerAct(gameState)}
-        onCheck={() =>
-          dispatch({
-            type: "PLAYER_CHECK",
-            position: gameState.currentPlayerPosition,
-          })
-        }
-        onCall={() =>
-          dispatch({
-            type: "PLAYER_CALL",
-            position: gameState.currentPlayerPosition,
-          })
-        }
-        onRaise={() =>
-          dispatch({
-            type: "PLAYER_RAISE",
-            position: gameState.currentPlayerPosition,
-            amount: 20,
-          })
-        }
-        canCheck={() =>
-          canPlayerCheck(
-            gameState.currentPlayerPosition,
-            gameState.table.seats,
-            gameState.currentBet
-          )
-        }
-      />
+        <ActionButtons
+          canAct={canPlayerAct(gameState)}
+          onCheck={() =>
+            dispatch({
+              type: "PLAYER_CHECK",
+              position: gameState.currentPlayerPosition,
+            })
+          }
+          onCall={() =>
+            dispatch({
+              type: "PLAYER_CALL",
+              position: gameState.currentPlayerPosition,
+            })
+          }
+          onRaise={() =>
+            dispatch({
+              type: "PLAYER_RAISE",
+              position: gameState.currentPlayerPosition,
+              amount: 20,
+            })
+          }
+          canCheck={() =>
+            canPlayerCheck(
+              gameState.currentPlayerPosition,
+              gameState.table.seats,
+              gameState.currentBet,
+            )
+          }
+        />
+      </div>
     </div>
   );
 }

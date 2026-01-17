@@ -1,0 +1,47 @@
+.container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  padding: 2rem 3rem;
+  color: #e5e5e5;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+}
+
+.contentWrapper {
+  max-width: 1800px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.loadingOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(15, 76, 117, 0.9);
+  color: #00d9ff;
+  padding: 1rem;
+  text-align: center;
+  z-index: 10;
+  font-weight: 600;
+  border-bottom: 2px solid #00d9ff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.errorOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 107, 107, 0.95);
+  color: white;
+  padding: 1rem;
+  text-align: center;
+  z-index: 10;
+  font-weight: 600;
+  border-bottom: 2px solid #ff4444;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
