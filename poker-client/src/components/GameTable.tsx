@@ -11,7 +11,11 @@ import { GameInfo } from "./GameInfo";
 import { Table } from "./Table";
 import styles from "./GameTable.module.css";
 
-export function GameTable() {
+interface Props {
+  onBackToLobby: () => void;
+}
+
+export function GameTable({ onBackToLobby }: Props) {
   const { tableId } = useParams<{ tableId: string }>();
 
   // Initialize with mock data immediately
@@ -57,6 +61,13 @@ export function GameTable() {
         <div className={styles.loadingOverlay}>Loading table data...</div>
       )}
       {error && <div className={styles.errorOverlay}>Error: {error}</div>}
+
+      <button
+        onClick={onBackToLobby}
+        style={{ position: "absolute", top: 10, left: 10 }}
+      >
+        Back to Lobby
+      </button>
 
       <div className={styles.contentWrapper}>
         <GameInfo

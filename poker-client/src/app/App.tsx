@@ -9,7 +9,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/lobby" replace />} />
         <Route path="/lobby" element={<Lobby />} />
-        <Route path="/table/:tableId" element={<GameTable />} />
+        <Route
+          path="/table/:tableId"
+          element={<GameTable onBackToLobby={() => window.history.back()} />}
+        />
       </Routes>
     </BrowserRouter>
   );
