@@ -1,12 +1,19 @@
 import { useNavigate } from "react-router-dom";
 import { useTables } from "../hooks/useTables";
 import styles from "./Lobby.module.css";
+import { useState } from "react";
+import { CreateTableModal } from "./CreateTableModal";
 
 export function Lobby() {
   const { tables, loading, error, refetch } = useTables();
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleJoinTable = (tableId: string) => {
+    navigate(`/table/${tableId}`);
+  };
+
+  const handleTableCreated = (tableId: string) => {
     navigate(`/table/${tableId}`);
   };
 
@@ -17,6 +24,13 @@ export function Lobby() {
     <div className={styles.container}>
       <div className={styles.header}>
         <h1 className={styles.title}>Poker Lobby</h1>
+        <button
+          className={styles.refreshButton}
+          onClick={() => setIsModalOpen(true)}
+          style={{ marginRight: "1rem" }}
+        >
+          ➕ Create Table
+        </button>
         <button onClick={refetch} className={styles.refreshButton}>
           🔄 Refresh Tables
         </button>
@@ -73,6 +87,12 @@ export function Lobby() {
           })}
         </div>
       )}
+
+      <CreateTableModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onTableCreated={handleTableCreated}
+      />
     </div>
   );
 }
