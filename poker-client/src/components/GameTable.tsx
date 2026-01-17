@@ -1,23 +1,52 @@
-import { useReducer } from "react";
+import { useEffect, useReducer, useRef } from "react";
 import { useParams } from "react-router-dom";
+import { useTable } from "../hooks/useTable";
 import { initialGameState } from "../mock/initialGameState";
-import { visibleBoard } from "../state/board-selector";
+import { canPlayerAct } from "../state/action-selector";
+import { canPlayerCheck } from "../state/betting-selector";
 import { gameReducer } from "../state/game-reducer";
 import { ActionButtons } from "./ActionButtons";
 import { Board } from "./Board";
 import { GameInfo } from "./GameInfo";
-import { Table } from "./Table";
-import { canPlayerCheck } from "../state/betting-selector";
-import { canPlayerAct, canPostBlinds } from "../state/action-selector";
 
 export function GameTable() {
   const { tableId } = useParams<{ tableId: string }>();
-  const [state, dispatch] = useReducer(gameReducer, initialGameState);
 
-  const boardCards = visibleBoard(state.board, state.phase);
+  // Initialize with mock data immediately
+  const [gameState, dispatch] = useReducer(gameReducer, initialGameState);
 
-  // Mock code.
-  const RAISE_AMOUNT = 20;
+  // Fetch real table data from server
+  const { table, loading, error } = useTable(tableId!);
+
+  // Track if we've synced to prevent infinite loop
+  const hasSynced = useRef(false);
+
+  // Sync with server state when table data arrives (only once)
+  useEffect(() => {
+    if (table && !hasSynced.current) {
+      console.log("Syncing server state:", table);
+      hasSynced.current = true;
+      dispatch({
+        type: "SYNC_SERVER_STATE",
+        payload: {
+          pot: table.pot,
+          phase: table.phase,
+          currentBet: table.currentBet,
+          board: table.board,
+          table: {
+            ...gameState.table,
+            id: table.id,
+            name: table.name,
+            seats: table.seats,
+          },
+          smallBlind: table.smallBlind,
+          bigBlind: table.bigBlind,
+        },
+      });
+    }
+  }, [table]);
+
+  // Show loading overlay while fetching, but still render initial mock state
 
   return (
     <div
@@ -25,61 +54,78 @@ export function GameTable() {
         display: "flex",
         alignContent: "center",
         flexDirection: "column",
+        position: "relative",
       }}
     >
-      <h1>Poker Game - Table {tableId}</h1>
-
-      <GameInfo
-        pot={state.pot}
-        phase={state.phase}
-        currentBet={state.currentBet}
-      />
-
-      <Board cards={boardCards} />
-      <Table
-        table={state.table}
-        currentPlayerPosition={state.currentPlayerPosition}
-        onFold={(position) => {
-          dispatch({ type: "FOLD", position });
-        }}
-      ></Table>
-
-      {canPostBlinds(state) && (
-        <button
-          onClick={() => {
-            dispatch({ type: "POST_BLINDS" });
+      {/* Show loading/error overlay */}
+      {loading && (
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            background: "rgba(0, 0, 0, 0.5)",
+            color: "white",
+            padding: "10px",
+            textAlign: "center",
+            zIndex: 10,
           }}
         >
-          Post Blinds
-        </button>
+          Loading table data...
+        </div>
+      )}
+      {error && (
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            background: "rgba(255, 0, 0, 0.7)",
+            color: "white",
+            padding: "10px",
+            textAlign: "center",
+            zIndex: 10,
+          }}
+        >
+          Error: {error}
+        </div>
       )}
 
+      <Board cards={gameState.board} />
+      <GameInfo
+        pot={gameState.pot}
+        phase={gameState.phase}
+        currentBet={gameState.currentBet}
+      />
+
       <ActionButtons
-        canAct={canPlayerAct(state)}
-        onCheck={() => {
+        canAct={canPlayerAct(gameState)}
+        onCheck={() =>
           dispatch({
             type: "PLAYER_CHECK",
-            position: state.currentPlayerPosition,
-          });
-        }}
-        onCall={() => {
+            position: gameState.currentPlayerPosition,
+          })
+        }
+        onCall={() =>
           dispatch({
             type: "PLAYER_CALL",
-            position: state.currentPlayerPosition,
-          });
-        }}
-        onRaise={() => {
+            position: gameState.currentPlayerPosition,
+          })
+        }
+        onRaise={() =>
           dispatch({
             type: "PLAYER_RAISE",
-            position: state.currentPlayerPosition,
-            amount: RAISE_AMOUNT,
-          });
-        }}
+            position: gameState.currentPlayerPosition,
+            amount: 20,
+          })
+        }
         canCheck={() =>
           canPlayerCheck(
-            state.currentPlayerPosition,
-            state.table.seats,
-            state.currentBet
+            gameState.currentPlayerPosition,
+            gameState.table.seats,
+            gameState.currentBet
           )
         }
       />

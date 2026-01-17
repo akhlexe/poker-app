@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useTables } from "../hooks/use-tables";
+import { useTables } from "../hooks/useTables";
 import styles from "./Lobby.module.css";
 
 export function Lobby() {

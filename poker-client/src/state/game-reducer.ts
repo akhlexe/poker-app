@@ -9,6 +9,8 @@ export function gameReducer(
     action: GameAction
 ): GameState {
     switch (action.type) {
+        case "SYNC_SERVER_STATE":
+            return handleSyncServerState(state, action);
         case "POST_BLINDS":
             return handlePostBlinds(state);
         case "FOLD":
@@ -21,5 +23,14 @@ export function gameReducer(
             return handleRaise(state, action);
         default:
             return state;
+    }
+}
+
+function handleSyncServerState(
+    state: GameState,
+    action: { type: "SYNC_SERVER_STATE"; payload: Partial<GameState>; }): GameState {
+    return {
+        ...state,
+        ...action.payload
     }
 }
