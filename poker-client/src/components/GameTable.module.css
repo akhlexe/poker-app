@@ -1,19 +1,21 @@
 .container {
   min-height: 100vh;
+  width: 100%;
   background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
   padding: 2rem 3rem;
   color: #e5e5e5;
-  max-width: 100%;
   display: flex;
-  align-items: center;
   flex-direction: column;
   position: relative;
 }
 
 .contentWrapper {
-  max-width: 1800px;
   width: 100%;
+  max-width: 1600px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .loadingOverlay {

@@ -70,9 +70,9 @@ button:focus-visible {
 
 .table {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  max-width: 1600px;
+  grid-template-columns: repeat(3, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 100%;
   width: 100%;
   margin: 2rem auto;
 }
