@@ -35,7 +35,7 @@ export function CreateTableModal({
     setError(null);
 
     try {
-      const response = await fetch("http://localhost:5073/api/tables", {
+      const response = await fetch("http://localhost:5073/tables", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
