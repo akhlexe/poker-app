@@ -4,41 +4,54 @@ namespace PokerApi.Services;
 
 public interface ITableStorageService
 {
-    IEnumerable<PokerTable> GetAllTables();
-    PokerTable? GetTableById(string id);
-    PokerTable CreateTable(CreateTableRequest request);
+    IEnumerable<Table> GetAllTables();
+    Table? GetTableById(string id);
+    Table CreateTable(CreateTableRequest request);
 }
 
 public class InMemoryTableStorageService : ITableStorageService
 {
-    private readonly List<PokerTable> _tables = [];
-    private int _nextId = 1;
+    private readonly Dictionary<string, Table> _tables = [];
 
-    public IEnumerable<PokerTable> GetAllTables()
+    public IEnumerable<Table> GetAllTables()
     {
-        return _tables;
+        return _tables.Values;
     }
 
-    public PokerTable? GetTableById(string id)
+    public Table? GetTableById(string id)
     {
-        return _tables.FirstOrDefault(t => t.Id == id);
+        return _tables.GetValueOrDefault(id);
     }
 
-    public PokerTable CreateTable(CreateTableRequest request)
+    public Table CreateTable(CreateTableRequest request)
     {
-        var table = new PokerTable
+        var id = Guid.NewGuid().ToString();
+
+        var table = new Table
         {
-            Id = _nextId++.ToString(),
+            Id = id,
             Name = request.Name,
-            CurrentPlayers = 0,
-            MaxPlayers = request.MaxPlayers,
             SmallBlind = request.SmallBlind,
             BigBlind = request.BigBlind,
-            MinBuyIn = request.BigBlind * 20,
-            MaxBuyIn = request.BigBlind * 100
+            Pot = 0,
+            CurrentBet = 0,
+            Phase = "preflop",
+            Board = [],
+            Seats = InitializeSeats(request.MaxPlayers)
         };
 
-        _tables.Add(table);
+        _tables[id] = table;
+
         return table;
+    }
+
+    private static Seat[] InitializeSeats(int maxPlayers)
+    {
+        var seats = new Seat[maxPlayers];
+        for (int i = 0; i < maxPlayers; i++)
+        {
+            seats[i] = new Seat { Position = i, Player = null };
+        }
+        return seats;
     }
 }
